@@ -14,10 +14,10 @@ router.get('/', (req, res) => {
         attributes: ['category_name']
       },
       //!!!!!! Need tag data
-      // {
-      //   model: Tag,
-      //   attributes: ['tag_name']
-      // }
+      {
+        model: Tag,
+        attributes: ['tag_name']
+      }
     ]
   })
   .then(dbProductData => res.json(dbProductData))
@@ -35,13 +35,13 @@ router.get('/:id', (req, res) => {
       id: req.params.id
     },
     // be sure to include its associated Category and Tag data
-    // include: {
+    // include: [{
 
-    // }
+    // }]
   })
   .then(dbProductData => {
     if (!dbProductData) {
-      res.status(404).json({ message: 'No category with this id found!'});
+      res.status(404).json({ message: 'No product with this id found!'});
       return;
     }
     res.json(dbProductData);
@@ -135,7 +135,7 @@ router.delete('/:id', (req, res) => {
   })
   .then(dbProductData => {
     if (!dbProductData) {
-      res.status(404).json({ message: 'No category found with this id!'});
+      res.status(404).json({ message: 'No product found with this id!'});
       return;
     }
     res.json({

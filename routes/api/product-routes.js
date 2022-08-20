@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
       // }
     ]
   })
-  .then(dbCategoryData => res.json(dbCategoryData))
+  .then(dbProductData => res.json(dbProductData))
   .catch(err => {
     console.log(err);
     res.status(500).json(err);
@@ -39,12 +39,12 @@ router.get('/:id', (req, res) => {
 
     // }
   })
-  .then(dbCategoryData => {
-    if (!dbCategoryData) {
+  .then(dbProductData => {
+    if (!dbProductData) {
       res.status(404).json({ message: 'No category with this id found!'});
       return;
     }
-    res.json(dbCategoryData);
+    res.json(dbProductData);
   })
   .catch(err => {
     console.log(err);
@@ -128,6 +128,21 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
+  Product.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then(dbProductData => {
+    if (!dbProductData) {
+      res.status(404).json({ message: 'No category found with this id!'});
+      return;
+    }
+    res.json({
+      message: 'Success! Product removed.',
+      data: dbProductData
+    })
+  });
 });
 
 module.exports = router;

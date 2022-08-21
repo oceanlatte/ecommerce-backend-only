@@ -13,9 +13,9 @@ router.get('/', (req, res) => {
         model: Category,
         attributes: ['category_name']
       },
-      //!!!!!! Need tag data
       {
         model: Tag,
+        through: ProductTag,
         attributes: ['tag_name']
       }
     ]
@@ -34,10 +34,17 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id
     },
-    // be sure to include its associated Category and Tag data
-    // include: [{
-
-    // }]
+    include: [
+      {
+        model: Category,
+        attributes: ['category_name']
+      },
+      {
+        model: Tag,
+        through: ProductTag,
+        attributes: ['tag_name']
+      }
+    ]
   })
   .then(dbProductData => {
     if (!dbProductData) {

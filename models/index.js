@@ -8,13 +8,15 @@ const ProductTag = require('./ProductTag');
 Product.belongsTo(Category, {
   // forgein key goes to parent class
   // product needs the category, can't have product w/o category
-  foreignKey: 'category_id'
+  foreignKey: 'category_id',
+  onDelete: 'cascade'
 });
 
 // Categories have many Products
 Category.hasMany(Product, {
   // category is still the parent, so category_id should be listed
-  foreignKey: 'category_id'
+  foreignKey: 'category_id',
+  onDelete: 'cascade'
 });
 
 // Products belongToMany Tags (through ProductTag)
